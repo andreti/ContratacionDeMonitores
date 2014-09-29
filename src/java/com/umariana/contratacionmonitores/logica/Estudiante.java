@@ -177,5 +177,8 @@ public class Estudiante {
         return "Estudiante{" + "primerNombre=" + primerNombre + ", segundoNombre=" + segundoNombre + ", primerApellido=" + primerApellido + ", segundoApellido=" + segundoApellido + ", codigo=" + codigo + ", estadoMatricula=" + estadoMatricula + ", foto=" + foto + ", promedioAcumulado=" + promedioAcumulado + ", semestreActual=" + semestreActual + ", identificacion=" + identificacion + '}';
     }
     
+    public String toStringDatosPrincipales(){
+        return "";
+    }
 
 }

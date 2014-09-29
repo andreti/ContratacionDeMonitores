@@ -1,10 +1,15 @@
 package com.umariana.contratacionmonitores.datos;
 
+import com.umariana.contratacionmonitores.excepciones.ExcepcionNoExiste;
+import com.umariana.contratacionmonitores.excepciones.ExcepcionYaExiste;
+import com.umariana.contratacionmonitores.logica.Administrador;
 import com.umariana.contratacionmonitores.logica.Aspirante;
 import com.umariana.contratacionmonitores.logica.Dependencia;
+import com.umariana.contratacionmonitores.logica.Estudiante;
 import com.umariana.contratacionmonitores.logica.Monitor;
 import com.umariana.contratacionmonitores.logica.Resultado;
 import java.beans.Statement;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -40,9 +45,9 @@ public class ContratacionMonitoresDAO {
     private AspiranteDAO aspiranteDAO;
     private MonitorDAO monitorDAO;
     private ResultadoDAO resultadoDAO;
-    private DependenciaDAO dependenciaDAO;
-    
+    private DependenciaDAO dependenciaDAO;   
     private EstudianteUniversidadDAO estudianteUDAO;
+    private AdministradorDAO adminDAO;
 
     
     public ContratacionMonitoresDAO() {      
@@ -52,7 +57,7 @@ public class ContratacionMonitoresDAO {
         monitorDAO = new MonitorDAO();
         resultadoDAO = new ResultadoDAO();
         dependenciaDAO = new DependenciaDAO();
-        
+        adminDAO = new AdministradorDAO();
         estudianteUDAO = new EstudianteUniversidadDAO();
         
     }
@@ -142,16 +147,18 @@ public class ContratacionMonitoresDAO {
         }
     }
     
-    public Aspirante registrarAspiranteEnBD(String identificacion) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException{
+    public Aspirante registrarAspiranteEnBD(String identificacion) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, ExcepcionYaExiste{
         
-        conectarBdUniversidad();
+        //conectarBdUniversidad();
         
-        Aspirante encontrado = estudianteUDAO.buscarEstudiante(identificacion);
+        Estudiante estudiante = estudianteUDAO.buscarEstudiante(identificacion);
+        Aspirante encontrado = null;
+        if(estudiante==null)
+            throw new ExcepcionYaExiste("La identificacion no scorresponde a ningun estudiante");
+        else
+            encontrado = aspiranteDAO.resgistrarAspiranteEnBD(estudiante);           
         
-        desconectarBdUniversidad();
-        
-        if(encontrado!=null)
-            aspiranteDAO.resgistrarAspiranteEnBD(encontrado);
+        //desconectarBdUniversidad();
 
         return encontrado;
         
@@ -213,6 +220,18 @@ public class ContratacionMonitoresDAO {
      */
     public ArrayList<Dependencia> darDependenciasRegistrados(){  
         return new ArrayList<Dependencia>();
+    }
+
+    public Estudiante buscarEstudiante(String identificacion) throws ExcepcionNoExiste {
+        Estudiante estudiante = estudianteUDAO.buscarEstudiante(identificacion); 
+        if(estudiante!=null)
+            return  estudiante;   
+        else
+            throw  new ExcepcionNoExiste("La identificación: "+ identificacion+" no corresponde a ningun estudiante de la Universidad");
+    }
+
+    public Administrador buscarAdministrador(String usuario, String password) throws ExcepcionNoExiste {
+        return adminDAO.buscarAdministrador(usuario, password);
     }
     
 }

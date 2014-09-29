@@ -7,6 +7,7 @@ import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+
 /**
 * Es la clase principal del sistema Contratacion de Monitores
 * @author CocoSoft
@@ -50,10 +51,54 @@ public class ContratacionMonitores {
         resultados   =  cmDAO.darResultadosRegistrados();
         monitores    =  cmDAO.darMonitoresRegistrados();
         dependencias =  cmDAO.darDependenciasRegistrados();   
+        
+        
+        registrosDePrueba();
+        
+       
+        
+        
+        
     }           
     //
     //METODOS
     //
+    void registrosDePrueba(){
+        try {
+            registrarAspirante("aspirante1","segundoNombre", "primerApellido","segundoApellido", 1, "estadoMatricula", null,1.0,1,"101");
+            registrarAspirante("aspirante2","segundoNombre2", "primerApellido2","segundoApellido2", 2, "estadoMatricula2", null,2.0,2,"102");
+            registrarAspirante("aspirante3","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"103");
+            registrarAspirante("aspirante4","segundoNombre3", "primerApellido3","segundoApellido3", 4, "estadoMatricula3", null,3.0,3,"104");
+            
+            
+            registrarAspirante("aspirante5","segundoNombre", "primerApellido","segundoApellido", 5, "estadoMatricula", null,1.0,1,"105");
+            registrarAspirante("aspirante6","segundoNombre6", "primerApellido","segundoApellido2", 6, "estadoMatricula", null,2.0,2,"106");
+            registrarAspirante("aspirante7","segundoNombre7", "primerApellido3","segundoApellido", 7, "estadoMatricula", null,3.0,3,"107");
+            registrarAspirante("aspirante8","segundoNombre8", "primerApellido","segundoApellido", 8, "estadoMatricula", null,3.0,3,"108");
+            
+            /*registrarMonitor("monitor1","segundoNombre", "primerApellido","segundoApellido", 1, "estadoMatricula", null,1.0,1,"105");
+            registrarMonitor("monitor2","segundoNombre2", "primerApellido2","segundoApellido2", 2, "estadoMatricula2", null,2.0,2,"106");
+            registrarMonitor("monitor3","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"107");
+            registrarMonitor("monitor4","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"108");    */                      
+            
+            agregarDependencia("Cod1", "Dependencia 1", "Esta es la Dependencia 1", "Tarde", 5);        
+            agregarDependencia("Cod2", "Dependencia 2", "Esta es la Dependencia 2", "Mañana", 4);
+            agregarDependencia("Cod3", "Dependencia 3", "Esta es la Dependencia 3", "Tarde", 3);
+            agregarDependencia("Cod4", "Dependencia 4", "Esta es la Dependencia 4", "Mañana", 2);
+            
+            agregarPostulacionAspirante("101", "Cod1");
+            agregarPostulacionAspirante("101", "Cod2");
+            agregarPostulacionAspirante("102", "Cod2");
+            
+            pasarAspiranteAMonitor("105", "Cod1");
+            pasarAspiranteAMonitor("106", "Cod2");
+      
+            
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
     /**
      * Retorna la lista de monitores
      * @return monitores
@@ -126,11 +171,13 @@ public class ContratacionMonitores {
         this.aspirantes = aspirantes;
     }
     /**
-     * 
-     * @param identificacion
+     * El metodo se encarga de verificar si el estudiante es un aspirante, monitor o no esta registrado 
+     * pasandole como parametro unicamente la identificacion
+     * @param identificacion != null && !=""
      * @return  Retorna 1 en caso de que la cedula pertenesca a un estudiante que es aspirante existente en el sistema
      *          Retorna 2 en caso de que la cedula pertenesca a un estudiante que es monitor existente en el sistema
      *          Retorna 3 en caso de que la cedula pertenesca a un estudiante que no este registrado en el sistema
+     *          Retorna 4 en caso de que la cedula NO pertenesca a ningun estudiante de la universidad
      * @throws ClassNotFoundException
      * @throws SQLException
      * @throws InstantiationException
@@ -146,14 +193,85 @@ public class ContratacionMonitores {
         Monitor monitorExiste = buscarMonitor(identificacion );
         if( monitorExiste != null )
             return 2;      
-
-        //nuevo= new Aspirante(primerNombre, segundoNombre, primerApellido, segundoApellido, codigo, estadoMatricula, foto, promedioAcumulado, semestreActual, identificacion);
-        Aspirante nuevo = cmDAO.registrarAspiranteEnBD(identificacion);
-        if(nuevo==null)
-            throw  new ExcepcionNoExiste("No se ha encontrado ningun resultado con la identificacion : "+identificacion);
+        
+        Estudiante estudiante = buscarEstudianteUniversidad(identificacion);
+        if(estudiante!=null)
+            return 3;
+    
+        return 4;
+    }
+    /**
+     * El metodo se encarga de pasar un aspirante que paso las pruebas a un monitor con su respectiva dependencia
+     * @param identificacion != null && !=""
+     * @param codDependencia != null && !=""
+     * @throws ExcepcionNoExiste Lanza la excepcion en caso de que el aspirante no esta registrado en el sistema y tambien si la dependencia no esta registrada
+     * @throws ExcepcionYaExiste Lanza la excepcion en caso de que el estudiante ya esta registrado como monitor
+     * @throws Exception 
+     */
+    public void pasarAspiranteAMonitor(String identificacion , String codDependencia) throws ExcepcionNoExiste, ExcepcionYaExiste, Exception{        
+        Aspirante aspirante= buscarAspirante(identificacion);
+        if(aspirante==null)
+            throw  new ExcepcionNoExiste("El aspirante no esta registrado en el sistema");
         else
-            aspirantes.add( nuevo );
-        return 1;
+        {
+            Monitor monitor=buscarMonitor(identificacion);
+            if(monitor!=null)
+                throw  new ExcepcionYaExiste("El estudiante con la identificaicon : "+ identificacion+" ya se encuentra registrado como monitor");
+            else
+            {
+                Dependencia dependencia= buscarDependencia(codDependencia);
+                if(dependencia==null)
+                    throw  new ExcepcionNoExiste("La dependencia que desea agregar al monitor no existe");
+                else{
+                    monitor= new Monitor(aspirante.darPrimerNombre(), aspirante.darSegundoNombre(),   
+                                         aspirante.darPrimerApellido(), aspirante.darSegundoApellido(),
+                                         aspirante.darCodigo(), aspirante.darEstadoMatricula(), 
+                                         aspirante.darFoto() ,aspirante.darPromedioAcumulado(), 
+                                         aspirante.darSemestreActual(), identificacion, dependencia);                   
+                    eliminarAspirante(identificacion);                  
+                    monitores.add(monitor);
+                    cmDAO.registrarMonitorEnBD();
+
+                }
+            }
+        }           
+    }
+    /**
+     * 
+     * @param identificacion
+     * @return
+     * @throws ExcepcionYaExiste
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     * @throws InstantiationException
+     * @throws IllegalAccessException 
+     */
+    public Aspirante registrarAspirante2(String identificacion) throws ExcepcionYaExiste, ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException{
+        Aspirante aspirante = buscarAspirante(identificacion);
+        if(aspirante!=null)
+            throw new ExcepcionYaExiste("El estudiante ya esta registrado como aspirante!!");
+        
+        Monitor monitor = buscarMonitor(identificacion);
+        if(monitor!=null)
+            throw new ExcepcionYaExiste("El estudiante ya esta registrado como monitor");           
+        
+        aspirante = cmDAO.registrarAspiranteEnBD(identificacion);
+        aspirantes.add(aspirante);
+        return aspirante;
+    }
+    
+    public Estudiante buscarEstudianteSistema(String identificacion) throws ExcepcionNoExiste{
+        Aspirante aspirante = buscarAspirante(identificacion);
+        if(aspirante!=null)
+            return aspirante;
+        
+        Monitor monitor = buscarMonitor(identificacion);
+        if(monitor!=null)
+            return monitor;
+        
+        if(aspirante== null && monitor==null)
+            throw  new ExcepcionNoExiste("El estudiante con identificaicon : "+identificacion+" no existe!!");
+        return null;
     }
     /**
      * El metodo se encarga de registrar un aspirante en el sistema
@@ -280,6 +398,7 @@ public class ContratacionMonitores {
             if( eliminar != null )
             {                   
                 aspirantes.remove(eliminar);
+                cmDAO.eliminarAspiranteEnBD();
             }
             else
             {
@@ -385,16 +504,16 @@ public class ContratacionMonitores {
      * @param semestre > 0 && <=10
      * @param promedioAcum > 0 && <= 5
      */
-    public void agregarDependencia(String nId, String nNombre, String nDescripcion, String nHorario)throws Exception
+    public void agregarDependencia(String nId, String nNombre, String nDescripcion, String nHorario, int cupos)throws Exception
     {
             Dependencia buscarDep = buscarDependencia(nId);
             if( buscarDep != null )
             {
-                //throw new Exception("La Dependencia que desea agregar ya existe !!");
+                throw new Exception("La Dependencia que desea agregar ya existe !!");
             }
             else
             {
-                Dependencia nuevaDependencia = new Dependencia( nId, nNombre, nDescripcion, nHorario);
+                Dependencia nuevaDependencia = new Dependencia( nId, nNombre, nDescripcion, nHorario, cupos);
                 dependencias.add( nuevaDependencia );
             }
     }
@@ -455,6 +574,29 @@ public class ContratacionMonitores {
         }
         return null;
     }
+    
+    
+    
+    public Estudiante buscarEstudianteUniversidad(String identificacion) throws ExcepcionNoExiste {
+        
+         Estudiante estudiante = null;
+         
+         estudiante= cmDAO.buscarEstudiante(identificacion);
+         if(estudiante!=null)
+             return estudiante;
+         
+         return null;
+    }
+    
+    public void eliminarEstudianteSistema(String identificacion) throws Exception {
+        Aspirante aspirante = buscarAspirante(identificacion);
+        if(aspirante!=null)
+            eliminarAspirante(identificacion);
+        
+        Monitor monitor = buscarMonitor(identificacion);
+        if(monitor!=null)
+            eliminarMonitor(identificacion);
+    }
     /**
      * Metodo para hacer pruebas
      * @param args 
@@ -487,10 +629,10 @@ public class ContratacionMonitores {
             
 
             //Pruebas para Dependencia
-            cm.agregarDependencia("Cod1 ", "Dependencia 1", "Esta es la Dependencia 1", "Tarde");
-            cm.agregarDependencia("Cod2 ", "Dependencia 2", "Esta es la Dependencia 2", "Mañana");
-            cm.agregarDependencia("Cod3 ", "Dependencia 3", "Esta es la Dependencia 3", "Tarde");
-            cm.agregarDependencia("Cod4 ", "Dependencia 4", "Esta es la Dependencia 4", "Mañana");
+            cm.agregarDependencia("Cod1 ", "Dependencia 1", "Esta es la Dependencia 1", "Tarde", 5);
+            cm.agregarDependencia("Cod2 ", "Dependencia 2", "Esta es la Dependencia 2", "Mañana", 4);
+            cm.agregarDependencia("Cod3 ", "Dependencia 3", "Esta es la Dependencia 3", "Tarde", 3);
+            cm.agregarDependencia("Cod4 ", "Dependencia 4", "Esta es la Dependencia 4", "Mañana", 2);
             for (Dependencia d : cm.darDependencias()) {                
                 System.out.println("Dependencia: "+d.toString());
             }
@@ -500,4 +642,12 @@ public class ContratacionMonitores {
             System.out.println("Error: "+ex.getMessage());
         }
     }
+
+    public Administrador ingresoAdmin(String usuario, String password) throws ExcepcionNoExiste {
+        return cmDAO.buscarAdministrador(usuario,password);
+    }
+
+ 
+
+    
 }

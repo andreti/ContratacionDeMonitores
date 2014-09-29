@@ -61,7 +61,9 @@ public class Aspirante extends Estudiante{
     } 
     /**
      * 
-     * @param agregarPostulacion
+     * @param idDependencia
+     * @param fechaPostulacion
+     * @param identificaiconAspirante
      * @throws ExcepcionYaExiste 
      */
     public void agregarPostulacion(String idDependencia, Date fechaPostulacion, String identificaiconAspirante) throws ExcepcionYaExiste
@@ -85,6 +87,5 @@ public class Aspirante extends Estudiante{
                 return buscarPostulacion;
         }
         return null;
-    }
-    
+    }   
 }

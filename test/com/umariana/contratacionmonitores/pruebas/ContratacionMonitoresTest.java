@@ -6,10 +6,12 @@
 
 package com.umariana.contratacionmonitores.pruebas;
 
+import com.umariana.contratacionmonitores.excepciones.ExcepcionNoExiste;
 import com.umariana.contratacionmonitores.logica.Aspirante;
 import com.umariana.contratacionmonitores.logica.ContratacionMonitores;
 import com.umariana.contratacionmonitores.logica.Dependencia;
 import com.umariana.contratacionmonitores.logica.Monitor;
+import java.sql.SQLException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -63,7 +65,7 @@ public class ContratacionMonitoresTest {
         assertTrue(aspiranteModificado.darPrimerApellido().equals("primerApellidoModificado"));
         assertTrue(aspiranteModificado.darSegundoApellido().equals("segundoApellidoModificado"));
         assertTrue(aspiranteModificado.darEstadoMatricula().equals("estadoMatricula"));
-        assertTrue(aspiranteModificado.darPromedioAcumulado() == 2.0);
+        assertTrue(aspiranteModificado.darPromedioAcumulado() == 1.0);
         assertTrue(aspiranteModificado.darSemestreActual()== 2);  
     }
 
@@ -214,16 +216,16 @@ public class ContratacionMonitoresTest {
     public void testAgregarDependencia() throws Exception {
         System.out.println("agregarDependencia");
         
-        cm.agregarDependencia("Cod1 ", "Dependencia 1", "Esta es la Dependencia 1", "Tarde");
+        cm.agregarDependencia("Cod1 ", "Dependencia 1", "Esta es la Dependencia 1", "Tarde", 5);
         assertTrue(cm.darDependencias().size()== 1);
-        cm.agregarDependencia("Cod2 ", "Dependencia 2", "Esta es la Dependencia 2", "Mañana");
+        cm.agregarDependencia("Cod2 ", "Dependencia 2", "Esta es la Dependencia 2", "Mañana", 4);
         assertTrue(cm.darDependencias().size()== 2);
-        cm.agregarDependencia("Cod3 ", "Dependencia 3", "Esta es la Dependencia 3", "Tarde");
+        cm.agregarDependencia("Cod3 ", "Dependencia 3", "Esta es la Dependencia 3", "Tarde", 3);
         assertTrue(cm.darDependencias().size()== 3);
-        cm.agregarDependencia("Cod4 ", "Dependencia 4", "Esta es la Dependencia 4", "Mañana");
+        cm.agregarDependencia("Cod4 ", "Dependencia 4", "Esta es la Dependencia 4", "Mañana", 2);
         assertTrue(cm.darDependencias().size()== 4);
         
-        cm.agregarDependencia("Cod4 ", "Dependencia 4", "Esta es la Dependencia 4", "Mañana");
+        cm.agregarDependencia("Cod4 ", "Dependencia 4", "Esta es la Dependencia 4", "Mañana", 1);
         assertTrue(cm.darDependencias().size()== 4);
 
     }
@@ -235,13 +237,13 @@ public class ContratacionMonitoresTest {
     public void testBuscarDependencia() throws Exception {
         System.out.println("buscarDependencia");
         
-        cm.agregarDependencia("Cod1", "Dependencia 1", "Esta es la Dependencia 1", "Tarde");
+        cm.agregarDependencia("Cod1 ", "Dependencia 1", "Esta es la Dependencia 1", "Tarde", 5);
         assertTrue(cm.darDependencias().size()== 1);
-        cm.agregarDependencia("Cod2", "Dependencia 2", "Esta es la Dependencia 2", "Mañana");
+        cm.agregarDependencia("Cod2 ", "Dependencia 2", "Esta es la Dependencia 2", "Mañana", 4);
         assertTrue(cm.darDependencias().size()== 2);
-        cm.agregarDependencia("Cod3", "Dependencia 3", "Esta es la Dependencia 3", "Tarde");
+        cm.agregarDependencia("Cod3 ", "Dependencia 3", "Esta es la Dependencia 3", "Tarde", 3);
         assertTrue(cm.darDependencias().size()== 3);
-        cm.agregarDependencia("Cod4", "Dependencia 4", "Esta es la Dependencia 4", "Mañana");
+        cm.agregarDependencia("Cod4 ", "Dependencia 4", "Esta es la Dependencia 4", "Mañana", 2);
         assertTrue(cm.darDependencias().size()== 4);
         
         Dependencia dependenciaBuscada = cm.buscarDependencia("Cod1");
@@ -261,10 +263,10 @@ public class ContratacionMonitoresTest {
     public void testEliminarDependencia() throws Exception {
         System.out.println("EliminarDependencia");
         
-        cm.agregarDependencia("Cod1", "Dependencia 1", "Esta es la Dependencia 1", "Tarde");        
-        cm.agregarDependencia("Cod2", "Dependencia 2", "Esta es la Dependencia 2", "Mañana");      
-        cm.agregarDependencia("Cod3", "Dependencia 3", "Esta es la Dependencia 3", "Tarde");       
-        cm.agregarDependencia("Cod4", "Dependencia 4", "Esta es la Dependencia 4", "Mañana");
+        cm.agregarDependencia("Cod1", "Dependencia 1", "Esta es la Dependencia 1", "Tarde", 5);        
+        cm.agregarDependencia("Cod2", "Dependencia 2", "Esta es la Dependencia 2", "Mañana", 4);      
+        cm.agregarDependencia("Cod3", "Dependencia 3", "Esta es la Dependencia 3", "Tarde", 3);       
+        cm.agregarDependencia("Cod4", "Dependencia 4", "Esta es la Dependencia 4", "Mañana", 2);
         
         cm.eliminarDependencia("Cod1");
         Dependencia dependenciaEliminada= cm.buscarDependencia("Cod1");
@@ -288,8 +290,8 @@ public class ContratacionMonitoresTest {
     public void testModificarDependencia() throws Exception {
         System.out.println("ModificarDependencia");
         
-        cm.agregarDependencia("Cod1", "Dependencia 1", "Esta es la Dependencia 1", "Tarde");        
-        cm.agregarDependencia("Cod2", "Dependencia 2", "Esta es la Dependencia 2", "Mañana"); 
+        cm.agregarDependencia("Cod1", "Dependencia 1", "Esta es la Dependencia 1", "Tarde", 5);        
+        cm.agregarDependencia("Cod2", "Dependencia 2", "Esta es la Dependencia 2", "Mañana", 4); 
         System.out.println(cm.buscarDependencia("Cod1").toString());
         
         cm.modificarDependencia("Cod1", "Dependencia 1 Modificado", "Esta es la Dependencia 1 Modificado", "TardeModificado");   
@@ -298,5 +300,64 @@ public class ContratacionMonitoresTest {
         assertTrue(cm.buscarDependencia("Cod1").darHorario().equals("TardeModificado"));
         System.out.println(cm.buscarDependencia("Cod1").toString());
     
+    }
+    
+    
+    @Test
+    public void testIngresar() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, ExcepcionNoExiste, Exception{
+        System.out.println("Ingresar");
+      
+        
+        cm.registrarMonitor("primerNombre","segundoNombre", "primerApellido","segundoApellido", 1, "estadoMatricula", null,1.0,1,"101");
+        cm.registrarMonitor("primerNombre2","segundoNombre2", "primerApellido2","segundoApellido2", 2, "estadoMatricula2", null,2.0,2,"102");
+        cm.registrarMonitor("primerNombre3","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"103");
+        cm.registrarMonitor("primerNombre3","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"104");
+        
+        
+        int n1=cm.ingreso("101");
+        int n2=cm.ingreso("102");
+        int n3=cm.ingreso("104");
+        int n4=cm.ingreso("105");
+        int n5=cm.ingreso("105");
+        
+        assertTrue(2==n1);
+        assertTrue(2==n2);
+        assertTrue(2==n3);
+        assertTrue(3==n4);
+        assertTrue(1==n5);
+    }
+    
+    @Test
+    public void testPasarAspiranteAMonitor() {
+        
+        try{
+        
+        cm.registrarMonitor("primerNombre","segundoNombre", "primerApellido","segundoApellido", 1, "estadoMatricula", null,1.0,1,"101");
+        cm.registrarMonitor("primerNombre2","segundoNombre2", "primerApellido2","segundoApellido2", 2, "estadoMatricula2", null,2.0,2,"102");
+        
+        cm.ingreso("103");
+        cm.ingreso("104");
+        cm.ingreso("105");
+        
+        cm.agregarDependencia("Cod1", "Dependencia 1", "Esta es la Dependencia 1", "Tarde", 5);
+        cm.agregarDependencia("Cod2", "Dependencia 2", "Esta es la Dependencia 2", "Mañana", 4);
+        
+        cm.pasarAspiranteAMonitor("103", "Cod1");
+        cm.pasarAspiranteAMonitor("104", "Cod2");     
+ 
+        assertTrue(cm.buscarAspirante("103")==null);
+        assertTrue(cm.buscarMonitor("103")!=null);
+        assertTrue(cm.buscarAspirante("104")==null);
+        assertTrue(cm.buscarMonitor("104")!=null);
+         
+        
+        //cm.pasarAspiranteAMonitor("103", "Cod4");
+        
+        }
+        
+        catch(Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+   
     }
 }

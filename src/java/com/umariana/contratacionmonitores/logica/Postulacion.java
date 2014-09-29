@@ -21,6 +21,10 @@ public class Postulacion {
      */
     private String identificacionEstudiante;
     /**
+     * Es la comunicacion con la clase resultado
+     */
+    private Resultado resultado;
+    /**
      * Es el contructor de la clase Postulacion
      * @param fechaPostulado != null
      * @param idDependencia != null && !=""
@@ -72,6 +76,21 @@ public class Postulacion {
      */
     public void cambiarIdentificacionEstudiante(String identificacionEstudiante) {
         this.identificacionEstudiante = identificacionEstudiante;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public Resultado darResultado() {
+        return resultado;
+    }
+    /**
+     * 
+     * @param resultado 
+     */
+    public void cambiarResultado(Resultado resultado) {
+        this.resultado = resultado;
     }
     
     

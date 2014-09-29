@@ -24,6 +24,14 @@ public class Dependencia
 	 * Es la lista de monitores existentes en el sistema
 	 */
 	private String horario;
+        /**
+         * Son los cupos disponibles que tiene la dependencia
+         */
+        private int cuposDisponibles;
+         /**
+         * Son los cupos que tiene la dependencia
+         */
+        private int cupos;
 	
     //
     //CONSTRUCTOR
@@ -31,12 +39,13 @@ public class Dependencia
     /**
     * Es el constructor de la clase Monitor
     */
-    public Dependencia( String nId, String nNombre, String nDescripcion, String nHorario)
+    public Dependencia( String nId, String nNombre, String nDescripcion, String nHorario, int cupos)
     {
         id = nId;
         nombre = nNombre;
         descripcion = nDescripcion;
         horario = nHorario;
+        this.cupos = cupos;
     }
 
     public String darId() {
@@ -78,4 +87,34 @@ public class Dependencia
         return id+" - "+nombre+" - "+" - "+ descripcion+" - "+horario;
     }
 
+    /**
+     * 
+     * @return 
+     */
+    public int darCuposDisponibles() {
+        return cuposDisponibles;
+    }
+    /**
+     * 
+     * @param cuposDisponibles 
+     */
+    public void cambiarCuposDisponibles(int cuposDisponibles) {
+        this.cuposDisponibles = cuposDisponibles;
+    }
+    /**
+     * 
+     * @return 
+     */
+    public int darCupos() {
+        return cupos;
+    }
+    /**
+     * 
+     * @param cupos 
+     */
+    public void cambiarCupos(int cupos) {
+        this.cupos = cupos;
+    }
+
+    
 }
