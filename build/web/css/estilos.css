@@ -1,0 +1,388 @@
+/* 
+    Created on : 25/09/2014, 09:22:36 AM
+    Author     : CocoSoft
+*/
+/*SE RESETEA TODO EL DOCUMENTO*/
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Times New Roman", Georgia, Serif;
+}
+/*CABECERA*/
+header{
+    background: #8bbbfd;
+    margin: 0 auto 0;
+    padding: 0;
+    width: 100%;
+    margin-bottom: 1px;
+    background-image:  url("../img/logo2.png") ;
+    background-size: 100px 100px;
+    background-repeat: no-repeat;
+    background-position:1100px 0px;
+    background-color: white;
+
+}
+
+header  div#cabecera{
+    margin: 0 auto 0;
+    width: 960px;
+}
+div#cabecera div{
+    display: inline-block;
+    margin: 5px auto 5px;
+    vertical-align: middle;
+}
+div#cabecera div img{
+    margin-left: 50px;
+    height: 100px;
+    width: 100px;
+}
+
+header div#cabecera  h1{
+    font-size: 40px;
+    margin-left: 50px;
+}
+
+/*-------------------------------*/
+/*BARRA DE NAVEGACION*/
+div#barraNavegacion{
+    background: #4688da;
+    width: 100%;
+}
+div#barraSecundaria{
+    margin-top: 2px;
+    background: #4688da;
+    width: 100%;
+}
+nav#barraNavPrincipal{
+    margin: 0 auto 0;
+    width: 960px;
+}
+nav#barraNavSecundaria{
+    margin: 0 auto 0;
+    width: 960px;
+}
+nav#barraNavPrincipal ul {
+    list-style: none;
+    height: 30px;
+}
+nav#barraNavSecundaria ul {
+    list-style: none;
+    height: 30px;
+}
+nav#barraNavPrincipal ul li{
+    float: left;
+}
+nav#barraNavSecundaria ul li{
+    float: right;
+
+}
+nav#barraNavPrincipal li a{
+    text-align: center;
+    display: block;
+    background: #4688da;
+    border-right:3px solid white;
+    text-decoration: none;
+    font-size: 20px;
+    width: 120px;
+    height: 30px;
+}
+nav#barraNavSecundaria li a{
+    text-align: center;
+    display: block;
+    background: #4688da;
+    border-right:3px solid white;
+    text-decoration: none;
+    font-size: 20px;
+    width: 120px;
+    height: 30px;
+}
+nav#barraNavPrincipal li a:hover{
+    background: #56a2ff;
+    border-right:3px solid black;
+}
+nav#barraNavSecundaria li a:hover{
+    background: #56a2ff;
+    border-right:3px solid black;
+}
+/*-----------------------------*/
+/*CONTENIDO*/
+section{
+    background: #56a2ff;
+    margin: 0 auto 0;
+    padding: 5px 0px;
+    width: 960px;
+    -webkit-box-shadow: 21px 24px 27px -8px rgba(0,0,0,1);
+    -moz-box-shadow: 21px 24px 27px -8px rgba(0,0,0,1);
+    box-shadow: 21px 24px 27px -8px rgba(0,0,0,1);
+}
+div#contenedor{
+    width: 90%;
+    min-height:400px;
+}
+
+/*-------------------------------*/
+/*TABLA GENERAL*/
+table{
+    border: 0px solid #ffffff;
+    text-align: center;
+    width: 95%;
+    margin: 0 auto 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-collapse:collapse;
+}
+
+table th{
+    font-size: 30px;
+    height: 50px;
+}
+table tr{
+    height: 50px;
+}
+
+table tr#tr_rows{
+    font-size: 20px;
+    background: black; 
+    color: white;
+}
+table tr#tr_final{
+    background: green;
+    opacity: 0.5;
+    text-align: left; 
+    font-size: 10px; 
+    font-family: cursive;
+    color: white;
+    height:20px;
+}
+table tr#tr_final td{
+    padding-left: 14px;
+}
+table td#td_padd{
+    padding-left: 10px;
+    padding-right: 5px;
+}
+/*tabla registrar estudiante*/
+table#tbl_reg_est th{
+    font-size: 15px;
+    padding-bottom: 15px;
+}
+table#tbl_reg_est tr{
+    height: 30px;
+}
+table#tbl_reg_est td{
+    text-align: left; 
+    padding-left: 5px;
+}
+/*tabla para informacion*/
+table#tbl_ven{
+    width: 80%;
+    text-align: left;
+}
+table#tbl_ven tr{
+    height: 25px;
+}
+/*-------------------------------*/
+
+
+div#div_eliminar{
+    text-align: center;
+    margin: 0 auto 0;
+    background: #539fe2;
+}
+div#div_mensaje{
+    background: #7fc8f1;
+    font-size: 12px;
+    font-family: cursive;
+    text-align: center;
+    width: 100%; 
+}
+
+div#div_opciones{
+    width: 95%;
+    margin: 0 auto 0;
+    height: auto;
+}
+
+div#div_datos{
+    width: 95%;
+    margin: 0 auto 0;
+    height: auto;
+    //border: 1px solid #ccc;
+}
+.table_datos_est{
+    background: transparent;
+    border: 1px solid transparent;
+    padding: 2px;
+    text-align: left;
+    margin: 0 auto 0;
+    height: auto;
+    width: 500px;
+    
+}
+.table_datos_est th{
+    font-size:20px;
+    padding: 5px;
+}
+
+.table_datos_est:hover{ 
+    border: 1px solid #b7deff;
+}
+.table_datos_est td{
+    padding: 2px;
+    padding-left: 3px;
+}
+
+/*FORMULARIO REGISTRAR DEPENDENCIA*/
+
+form#formRegDep h4{
+    color:white; 
+    font-size: 13px;
+}
+form#formRegDep textArea{
+    width: 200px;
+    height: 80px;
+    resize: none;
+}
+form#formRegDep input#txt_nombre {
+    width: 200px;
+}
+
+form#formRegDep input#btnForm {
+    width: 200px;
+    background: #64c7ff; 
+    border: 0;
+}
+form#formRegDep input#btnForm:hover {
+    background: #2d9cd9;
+    color: white;
+}
+
+fieldset#fls_mostrar{
+    padding: 10px; 
+    border: 1px solid gray;
+    margin-bottom: 10px;
+}
+fieldset#fls_mostrar legend{
+    font-size: 15px;
+    color: gray;
+}
+fieldset#fls_mostrar p{
+    margin-bottom: 15px;
+    color: gray;
+}
+fieldset#fls_mostrar input[type=number]{
+    width: 50px;
+}
+
+/*ul*/
+ul#ul_num{
+    list-style: none;
+}
+ul#ul_num li{
+   margin-bottom: 5px;
+}
+
+
+/*-------------------------------*/
+/*CLASES*/
+.icono img{
+    width: 30px;
+    height: 30px;
+}
+.icono img:hover{
+    width: 33px;
+    height: 33px;
+}
+.icono_small img{
+    width: 30px;
+    height: 30px;
+}
+.icono_small img:hover{
+    width: 27px;
+    height: 27px;
+}
+/*.icono img#imgVer{
+    width: 30px;
+    height: 30px;
+}
+.icono img#imgVer:hover{
+    background-image: url(../img/icon_see_hover.png);
+    width: 33px;
+    height: 33px;
+}*/
+.icono input{
+    width: 30px;
+    height: 30px;
+}
+.icono input:hover{
+    width: 27px;
+    height: 27px;
+}
+.iconoGrande input{
+    width: 50px;
+    height: 50px;
+}
+.iconoGrande input:hover{
+    width: 47px;
+    height: 47px;
+}
+.msg_error{
+    color: red;
+    background: white;
+}
+.a_enlace{
+    font-family: cursive;
+    color:#c67284;
+    text-decoration:none;
+    font-size: 15px;
+}
+.a_enlace:hover{
+    color: red;
+}
+
+.post img,input {padding:0px}
+.post img:hover{
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;transition: all 1s ease;
+    -moz-transform: scale(1.2) rotate(-720deg) ;
+    -webkit-transform: scale(1.2) rotate(-720deg) ;
+    -o-transform: scale(1.2) rotate(-720deg) ;
+    -ms-transform: scale(1.2) rotate(-720deg) ;
+    transform: scale(1.2) rotate(-720deg);
+}
+.post input:hover{
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;transition: all 1s ease;
+    -moz-transform: scale(1.2) rotate(-720deg) ;
+    -webkit-transform: scale(1.2) rotate(-720deg) ;
+    -o-transform: scale(1.2) rotate(-720deg) ;
+    -ms-transform: scale(1.2) rotate(-720deg) ;
+    transform: scale(1.2) rotate(-720deg);
+}
+
+#imagen {
+    background: url(../img/icon_see.png) no-repeat ;
+    height: 30px;
+    width: 30px; 
+}
+#imagen:hover 
+{
+    background-position: url(../img/icon_see_hover.png) no-repeat ;
+    height: 27px; 
+    width: 27px; 
+}
+/*-------------------------------*/
+/*PIE DE PAGINA*/
+footer{
+    background: #4688da;
+    height: 20px;
+    width: 100%;
+    text-align: center;
+}
+footer a{
+    text-decoration: none;
+    color: #000000;
+    font-family: fantasy;
+}
+/*-------------------------------*/
