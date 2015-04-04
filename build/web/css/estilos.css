@@ -386,3 +386,47 @@ footer a{
     font-family: fantasy;
 }
 /*-------------------------------*/
+#antiRobotDiv{
+    margin-left: 15px;
+}
+#antiRobotDiv label input{
+    display: inline-block !important;
+    width: 30%!important;
+}
+#antiRobotDiv input{
+    width: 65%!important;
+}
+
+
+#divFormularioAdmin{
+    display: none;
+    margin-left: 15px;
+    background: #4688da;
+    position: absolute;
+    width: 270px;
+}
+#divFormularioAdmin input{
+    border-radius: 5px;
+    outline: none;
+    height: 30px;
+    margin: 10px;
+    border:2px solid transparent;
+    font-size: 15px;
+    width: 250px;
+    padding: 5px;
+}
+.msgForms{
+    background: white;
+    color: red;
+    display: none;
+    
+   // font-weight: bold;
+    padding: 5px;
+    text-justify: auto;
+}
+.btn_enviar{
+    font-weight: bold;
+}
+.btn_enviar:hover{
+    background: #8b8585;
+}

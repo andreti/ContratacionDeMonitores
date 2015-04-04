@@ -4,9 +4,8 @@ import com.umariana.contratacionmonitores.excepciones.ExcepcionNoExiste;
 import com.umariana.contratacionmonitores.logica.Administrador;
 import com.umariana.contratacionmonitores.util.TratamientoPassword;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,24 +41,56 @@ public class GestionAdministrador extends HttpServlet {
                     String password = request.getParameter("txt_contrasena");
                     password = TratamientoPassword.encriptar(password);
                     Administrador admin = ContratacionMonitoresServlet.darComunicacionLogica().ingresoAdmin(usuario, password);
-                    if (admin != null) 
+                    if (admin != null) {
                         sesion.setAttribute("admin", admin);
-                    else 
+                    } else {
                         sesion.setAttribute("mensaje", "Usuario y/o contraseña incorrecta!!");
-                    
-
+                    }
                     break;
                 case "cerrar":
                     sesion.removeAttribute("admin");
                     break;
                 case "actualizar":
                     break;
+                case "registrar":
+                    sesion.removeAttribute("mensaje");
+                    String nombre = request.getParameter("txt_nombre_completo");
+                    usuario = request.getParameter("txt_nick");
+                    password = request.getParameter("txt_pass1");
+                    password = TratamientoPassword.encriptar(password);
+                    admin = new Administrador(usuario, nombre, password);
+                    ContratacionMonitoresServlet.darComunicacionLogica().registrarAdministrador(admin);
+                    sesion.setAttribute("mensaje", "Registro exitoso");
+                    break;
+                case "validarNick":
+                    System.out.println(request.getParameter("nick"));
+                    //validarNickAdmin(request, response);
+                    break;
+
+            }
+            ContratacionMonitoresServlet.setearSesion(sesion);
+            if (!accion.equals("validarNick")) {
+                response.sendRedirect("admin.jsp");
+            } else {
+                response.setContentType("text/plain;charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                boolean existe = ContratacionMonitoresServlet.darComunicacionLogica().validarNickAdministrador(request.getParameter("nick"));
+                int resultado = existe ? 1 : 0;
+                out.println(resultado);
+                out.close();
             }
         } catch (ExcepcionNoExiste | SQLException ex) {
             sesion.setAttribute("mensaje", ex.getMessage());
         }
-        ContratacionMonitoresServlet.setearSesion(sesion);
-        response.sendRedirect("admin.jsp");
 
+    }
+
+    protected void validarNickAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+        response.setContentType("text/plain;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        boolean existe = ContratacionMonitoresServlet.darComunicacionLogica().validarNickAdministrador(request.getParameter("nick"));
+        int resultado = existe ? 1 : 0;
+        out.println(resultado);
+        out.close();
     }
 }

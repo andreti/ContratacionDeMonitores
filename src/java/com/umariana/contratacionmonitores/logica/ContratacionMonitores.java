@@ -617,6 +617,12 @@ public class ContratacionMonitores {
        return cmDAO.darHorariosJornada(idJornada);
     }
     
+    public void registrarAdministrador(Administrador admin) throws SQLException {
+        cmDAO.registrarAdministrador(admin);
+    }
+    public boolean validarNickAdministrador(String nick) throws SQLException {
+        return cmDAO.validarNickAdministrador(nick);
+    }
     
     /**
      * Metodo para hacer pruebas
@@ -668,6 +674,7 @@ public class ContratacionMonitores {
         return cmDAO.buscarHorario(idHorario);
     }
 
+    
     public void modificarDependencia(Dependencia update) throws SQLException, ExcepcionYaExiste {
         cmDAO.actualizarDependenciaEnBd(update);
     }
@@ -687,4 +694,6 @@ public class ContratacionMonitores {
     public void seleccionarAspirante(int idHorario,String identificacion) throws SQLException {
         cmDAO.seleccionarAspirante(idHorario,identificacion);
     }
+
+
 }

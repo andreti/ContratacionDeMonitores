@@ -5,7 +5,6 @@
  */
 package com.umariana.contratacionmonitores.util;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -90,6 +89,7 @@ public class TratamientoPassword {
         System.out.println("SHA-256 = " + TratamientoPassword.encriptar(mensaje, TratamientoPassword.SHA256));
         System.out.println("SHA-384 = " + TratamientoPassword.encriptar(mensaje, TratamientoPassword.SHA384));
         System.out.println("SHA-512 = " + TratamientoPassword.encriptar(mensaje, TratamientoPassword.SHA512));*/
-        System.out.println("SHA-1 = " + TratamientoPassword.encriptar("123456789asdfghjklqwertyuiopzxcvbnm"));
+        System.out.println("SHA-1 = " + TratamientoPassword.encriptar("HOLA"));
+        System.out.println("SHA-1 = " + TratamientoPassword.encriptar("hola"));
     }
 }

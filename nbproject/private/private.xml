@@ -2,14 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/D:/Entornos/MetadataNetbeans/ContratacionMonitores/src/java/com/umariana/contratacionmonitores/datos/AdministradorDAO.java</file>
-            <file>file:/D:/Entornos/MetadataNetbeans/ContratacionMonitores/src/java/com/umariana/contratacionmonitores/util/TratamientoPassword.java</file>
-            <file>file:/D:/Entornos/MetadataNetbeans/ContratacionMonitores/src/java/com/umariana/contratacionmonitores/logica/Administrador.java</file>
-            <file>file:/D:/Entornos/MetadataNetbeans/ContratacionMonitores/src/java/com/umariana/contratacionmonitores/logica/ContratacionMonitores.java</file>
-            <file>file:/D:/Entornos/MetadataNetbeans/ContratacionMonitores/web/admin.jsp</file>
-            <file>file:/D:/Entornos/MetadataNetbeans/ContratacionMonitores/src/java/com/umariana/contratacionmonitores/datos/ContratacionMonitoresDAO.java</file>
-            <file>file:/D:/Entornos/MetadataNetbeans/ContratacionMonitores/src/java/com/umariana/contratacionmonitores/controladores/GestionAdministrador.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
